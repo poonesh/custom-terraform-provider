@@ -19,7 +19,7 @@ type Food struct {
 
 func main() {
 
-	db, err := sql.Open("postgres", "user=[your PSQL USERNAME] password=[your PSQL PASSWORD] dbname=terraformproviderexample sslmode=disable")
+	db, err := sql.Open("postgres", "user=[your PSQL USERNAME] password=[your PSQL PASSWORD] dbname=postgres sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
