@@ -22,24 +22,24 @@ The example .tf files show how we can now write new terraform resources, which w
 
 # Installation and Running
 
-1. Create Database
+## 1. Create Database
 
-Start by installing postgres (link here) and ensure it is running.
+Start by [installing postgres](https://www.postgresql.org/download/) and ensure it is running.
 With brew you can do this by
 ```
 sudo brew services start postgres
 ```
-
+The following command will create the foods table used by the server.
 ```
 cd server
 psql postgres -f foods.sql;
 cd ..
 ```
 
-This will create the foods table used by the server
+## 2. Run the server
 
-2. Run the server
-Open `server/main.go` and edit the user and password for your postgres database
+Open `server/main.go` and edit the user and password for your postgres database.
+
 To run the server, 
 
 ```
@@ -51,7 +51,7 @@ cd ..
 ```
 
 
-3. Build and install the provider
+## 3. Build and install the provider
 
 If running on an OS other than MacOS, you will need to change the OS_ARCH variable in provider/Makefile.
 
@@ -61,11 +61,12 @@ Then, to install the provider, run
 cd provider
 make
 cd ..
+```
 
 This will build and install the provider in a place terraform can find it.
 
 
-4. Run the terraform code
+## 4. Run the terraform code
 
 Now that the provider is installed, we can run the terraform code in the examples directory. The provided example will create a few resources, each which will add a row to the database table created in step 1. Commenting the resource out and re-running the terraform will cause these rows to be deleted.
 
