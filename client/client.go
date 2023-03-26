@@ -16,12 +16,12 @@ import (
 const baseURL = "http://127.0.0.1:8080"
 
 type Client struct {
-	BaseURL string
+	BaseURL    string
 	HTTPClient *http.Client
 }
 
 func NewClient() *Client {
-	return &Client {
+	return &Client{
 		BaseURL: baseURL,
 		HTTPClient: &http.Client{
 			Timeout: time.Minute,
@@ -30,14 +30,14 @@ func NewClient() *Client {
 }
 
 type Food struct {
-	Id     int `json:"id"`
+	Id     int    `json:"id"`
 	Name   string `json:"name"`
-	Origin string `json:"origin"`	
+	Origin string `json:"origin"`
 }
 
 func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
-    req.Header.Set("Accept", "application/json; charset=utf-8")
+	req.Header.Set("Accept", "application/json; charset=utf-8")
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
@@ -47,11 +47,11 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK && res.StatusCode != http.StatusCreated {
-		return errors.Errorf("unknown error, the request failed with %d code", res.StatusCode)	
+		return errors.Errorf("unknown error, the request failed with %d code", res.StatusCode)
 	}
 
 	if err = json.NewDecoder(res.Body).Decode(&v); err != nil {
-		return errors.New("failed to unmarshall the response")	
+		return errors.New("failed to unmarshall the response")
 	}
 	fmt.Println(res.StatusCode)
 	return nil
@@ -64,7 +64,7 @@ func (c *Client) GetFood(ctx context.Context, id int) (*Food, error) {
 	getUrl := fmt.Sprintf("%s/%s/%d", c.BaseURL, "food", id)
 	req, err := http.NewRequest("GET", getUrl, strings.NewReader(q.Encode()))
 	if err != nil {
-		return nil, err	
+		return nil, err
 	}
 
 	req = req.WithContext(ctx)
@@ -126,7 +126,7 @@ func (c *Client) UpdateFood(ctx context.Context, food *Food, id int) (*Food, err
 }
 
 // Delete
-func (c *Client) DeleteFood(ctx context.Context, id int) (error) {
+func (c *Client) DeleteFood(ctx context.Context, id int) error {
 	var u *Food
 	postUrl := fmt.Sprintf("%s/%s/%d", c.BaseURL, "food", id)
 	req, err := http.NewRequest("DELETE", postUrl, nil)
