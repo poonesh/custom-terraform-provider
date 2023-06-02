@@ -13,7 +13,7 @@ The client is a simple client which sends requests to the server.
 
 ## Provider
 
-The provider will parse and interpret terraform code, and call the client methods appropritately. Under the hood, the terraform provider also manages the state file.
+The provider works alongside terraform core to parse and interpret terraform code, and call the client methods appropritately. Under the hood, terraform core also manages the state file.
 
 ## Example Terraform Code
 
